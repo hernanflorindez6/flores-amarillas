@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para mi amor 💛</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #fff9c4, #ffe082, #fff59d);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #f57f17;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px #fff;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #4e342e;
+      max-width: 600px;
+      text-align: center;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .flowers {
+      display: flex;
+      gap: 20px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .flower {
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at center, #ffeb3b 50%, #fbc02d 90%);
+      border-radius: 50%;
+      position: relative;
+      animation: sway 3s ease-in-out infinite;
+    }
+
+    .flower::before,
+    .flower::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at center, #ffeb3b 50%, #fbc02d 90%);
+      border-radius: 50%;
+    }
+
+    .flower::before { top: -30px; left: 0; }
+    .flower::after { left: 30px; top: 0; }
+
+    @keyframes sway {
+      0%,100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    button {
+      background: #fdd835;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background: #fbc02d;
+    }
+
+    /* Carta */
+    .letter {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 350px;
+      background: #fffde7;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.3);
+      text-align: center;
+      transition: transform 0.5s ease;
+      z-index: 100;
+    }
+
+    .letter.open {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .letter h2 {
+      color: #f57f17;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      padding: 8px 16px;
+      background: #ffca28;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* corazones flotando */
+    .hearts {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      color: #e91e63;
+      font-size: 2rem;
+      animation: float 4s linear forwards;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🌼 Para mi amor 🌼</h1>
+  <p>
+    Hoy quiero regalarte un pequeño rincón eterno en internet.<br>
+    Así como estas flores amarillas nunca se marchitan aquí, <br>
+    quiero que nuestro amor tampoco lo haga 💛
+  </p>
+
+  <div class="flowers">
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+  </div>
+
+  <button onclick="openLetter()">💌 Abrir carta secreta 💌</button>
+
+  <div class="letter" id="letter">
+    <h2>Mi amor 💛</h2>
+    <p>
+      Eres la razón por la que sonrío todos los días.<br>
+      Gracias por estar en mi vida, por ser mi alegría y mi paz.<br>
+      Te prometo un amor tan infinito como estas flores que nunca mueren.
+    </p>
+    <button class="close-btn" onclick="closeLetter()">Cerrar</button>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <!-- 🎶 Música de fondo -->
+  <audio id="music" src="cancion.mp3"></audio>
+
+  <script>
+    function openLetter() {
+      document.getElementById("letter").classList.add("open");
+      showHearts();
+      playMusic();
+    }
+
+    function closeLetter() {
+      document.getElementById("letter").classList.remove("open");
+      pauseMusic();
+    }
+
+    function showHearts() {
+      const heartsContainer = document.getElementById("hearts");
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => { heart.remove(); }, 4000);
+      }
+    }
+
+    function playMusic() {
+      const music = document.getElementById("music");
+      music.play();
+    }
+
+    function pauseMusic() {
+      const music = document.getElementById("music");
+      music.pause();
+    }
+  </script>
+</body>
+</html>
